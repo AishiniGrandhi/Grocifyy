@@ -1,0 +1,295 @@
+:root {
+    --green: green;
+    --black: #130f40;
+    --light-color: #666;
+    --box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, 0.1);
+    --border: 2rem solid rgba(0, 0, 0, 0.1);
+    --outline: 0.1rem solid rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 7rem;
+}
+
+body {
+    background: #f5f5f5;
+    font-family: 'Poppins', sans-serif;
+}
+
+section {
+    padding: 4rem 9%;
+}
+
+/* Home Section */
+.home {
+    background: url('https://thumbs.dreamstime.com/b/vegetables-fruits-over-grocery-store-background-organic-dieting-80689477.jpg') no-repeat center/cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.home .content {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 3rem;
+    border-radius: 1rem;
+}
+
+.home .content h3 {
+    font-size: 4rem;
+    color: var(--black);
+    margin-bottom: 1rem;
+}
+
+.home .content h3 span {
+    color: var(--green);
+}
+
+.home .content p {
+    font-size: 1.6rem;
+    color: var(--light-color);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+}
+
+
+.heading {
+    text-align: center;
+    padding: 2rem 0;
+    padding-bottom: 3rem;
+    font-size: 3.5rem;
+    color: var(--black);
+}
+
+.heading span {
+    background: var(--green);
+    color: #fff;
+    display: inline-block;
+    padding: 0.5rem 3rem;
+    clip-path: polygon(100% 0, 93% 50%, 100% 99%, 0% 100%, 7% 50%, 0% 0%);
+}
+
+.btn {
+    border: 0.2rem solid var(--black);
+    margin-top: 1rem;
+    display: inline-block;
+    padding: 0.8rem 3rem;
+    font-size: 1.7rem;
+    border-radius: 0.5rem;
+    color: var(--black);
+    cursor: pointer;
+    background: none;
+    transition: 0.3s ease;
+}
+
+.btn:hover {
+    background: var(--green);
+    color: white;
+}
+
+.features .box-container {
+    border: 0px solid;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.features .box-container .box {
+    padding: 3rem 2rem;
+    background: #fff;
+    outline: var(--outline);
+    outline-offset: -1rem;
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    transition: 0.3s;
+}
+
+.features .box-container .box:hover {
+    box-shadow: 1px 1px 10px 4px var(--green);
+}
+
+.features .box-container .box img {
+    margin: 1rem 0;
+    height: 15rem;
+}
+
+.features .box-container .box h3 {
+    font-size: 2.5rem;
+    line-height: 1.8;
+    color: var(--black);
+}
+
+.features .box-container .box p {
+    font-size: 1.5rem;
+    line-height: 1.8;
+    color: var(--light-color);
+    padding-bottom: 1rem;
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    justify-content: center;
+}
+
+.product-container .box {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 28rem;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-container .box:hover {
+    transform: translateY(-1rem);
+    box-shadow: 1px 1px 10px 4px var(--green);
+}
+
+.product-container .box img {
+    width: 100%;
+    height: 20rem;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.product-container .box h2 {
+    font-size: 2.2rem;
+    color: var(--black);
+    margin-bottom: 0.5rem;
+}
+
+.product-container .box .price {
+    font-size: 1.8rem;
+    color: var(--green);
+    margin-bottom: 1rem;
+}
+
+.product-container .box .stars i {
+    font-size: 1.6rem;
+    color: orange;
+    margin: 0 0.1rem;
+}
+
+.categories .box-container {
+    border: 0px solid;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.categories .box-container .box {
+    padding: 3rem 0;
+    background: #fff;
+    border-radius: .5rem;
+    box-shadow: var(--box-shadow);
+    outline: var(--outline);
+    outline-offset: -1rem;
+    text-align: center;
+}
+
+.categories .box-container .box:hover {
+    box-shadow: 1px 1px 10px 4px var(--green);
+}
+
+.categories .box-container .box img {
+    margin: 1rem 0;
+    height: 15rem;
+}
+
+.categories .box-container .box h3 {
+    font-size: 2rem;
+    line-height: 1.8;
+    color: var(--black);
+}
+
+.categories .box-container .box p {
+    font-size: 1.7rem;
+    line-height: 1.8;
+    color: var(--light-color);
+    padding-bottom: 1rem;
+}
+
+.review .review-slider {
+    border: 0px solid;
+    padding: 1rem;
+}
+
+.review .review-slider .box {
+    border: 0px solid red;
+    background: #fff;
+    border-radius: .5rem;
+    text-align: center;
+    padding: 3rem 2rem;
+    outline-offset: -1rem;
+    outline: var(--outline);
+    box-shadow: var(--box-shadow);
+    transition: .2s linear;
+}
+
+.review .review-slider .box:hover {
+    box-shadow: 1px 1px 10px 4px var(--green);
+}
+
+.review .review-slider .box img {
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50%;
+}
+
+.review .review-slider .box p {
+    padding: 1rem 0;
+    line-height: 1.8;
+    color: var(--light-color);
+    font-size: 1.5rem;
+}
+
+.review .review-slider .box h3 {
+    padding-bottom: .5rem;
+    color: var(--black);
+    font-size: 2.2rem;
+}
+
+.review .review-slider .box .stars i {
+    color: orange;
+    font-size: 1.7rem;
+}
+
+.swiper {
+    width: 100%;
+    padding: 2rem 0;
+}
+
+.swiper-wrapper {
+    display: flex;
+}
+
+.swiper-slide {
+    flex-shrink: 0;
+    width: auto;
+}
+
+
+@media (max-width: 450px) {
+    html {
+        font-size: 50%;
+    }
+
+    .heading {
+        font-size: 2.5rem;
+    }
+}

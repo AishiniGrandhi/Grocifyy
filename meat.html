@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Grocifyy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="topnav">
+        <div class="logo">Grocifyy</div>
+
+        <ol class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="product.html" class="active">Store</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ol>
+
+        <div class="icons">
+            <!-- Search -->
+            <div class="icon-circle" onclick="toggleSearch()">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <!-- Cart -->
+            <div class="icon-circle" class="cart-container">
+                <a href="cart.html"><i class="fas fa-shopping-bag cart-icon"></i></a>
+                <span class="cart-count">3</span>
+            </div>
+
+            <!-- Login -->
+            <div class="icon-circle" onclick="openModal('login')">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+
+        <!-- Search Input -->
+        <div id="searchBox" class="search-box">
+            <input type="text" placeholder="Search for items...">
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="auth-modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Welcome Back!</h2>
+                <span class="close" onclick="closeModal()">×</span>
+            </div>
+            <div class="modal-content">
+                <div class="success-message" id="successMessage"></div>
+
+                <div class="input-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email">
+                    <div class="error-message" id="emailError">Please enter a valid email address</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password">
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword('loginPassword', this)"></i>
+                    <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
+                </div>
+
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <div class="forgot-password">
+                        <a href="#" onclick="showForgotPassword()">Forgot password?</a>
+                    </div>
+                </div>
+
+                <button class="auth-btn" id="loginBtn" onclick="handleLogin()">
+                    <span id="loginBtnText">Login</span>
+                </button>
+
+                <div class="social-login">
+                    <p>Or login with</p>
+                    <div class="social-icons">
+                        <div class="social-icon facebook" onclick="socialLogin('facebook')">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+                        <div class="social-icon google" onclick="socialLogin('google')">
+                            <i class="fab fa-google"></i>
+                        </div>
+                        <div class="social-icon apple" onclick="socialLogin('apple')">
+                            <i class="fab fa-apple"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="auth-footer">
+                    Don't have an account? <a href="#" onclick="switchToSignup()">Sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="auth-modal">
+            <div class="modal-header">
+                <h2>Create Your Account</h2>
+                <span class="close" onclick="closeModal()">×</span>
+            </div>
+            <div class="modal-content">
+                <div class="success-message" id="signupSuccessMessage"></div>
+
+                <div class="input-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" placeholder="Enter your full name">
+                    <div class="error-message" id="nameError">Please enter your name</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email">
+                    <div class="error-message" id="signupEmailError">Please enter a valid email address</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password">
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword('signupPassword', this)"></i>
+                    <div class="error-message" id="signupPasswordError">Password must be at least 6 characters</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm your password">
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword('confirmPassword', this)"></i>
+                    <div class="error-message" id="confirmPasswordError">Passwords don't match</div>
+                </div>
+
+                <div class="input-group">
+                    <input type="checkbox" id="termsAgreement">
+                    <label for="termsAgreement">I agree to the <a href="#" style="color: #76c900;">Terms of Service</a>
+                        and <a href="#" style="color: #76c900;">Privacy Policy</a></label>
+                    <div class="error-message" id="termsError">You must agree to the terms</div>
+                </div>
+
+                <button class="auth-btn" id="signupBtn" onclick="handleSignup()">
+                    <span id="signupBtnText">Create Account</span>
+                </button>
+
+                <div class="auth-footer">
+                    Already have an account? <a href="#" onclick="switchToLogin()">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="auth-modal" style="width: 380px;">
+            <div class="modal-header">
+                <h2>Reset Password</h2>
+                <span class="close" onclick="closeModal()">×</span>
+            </div>
+            <div class="modal-content">
+                <p style="margin-bottom: 20px; color: #666; font-size: 14px;">
+                    Enter your email address and we'll send you a link to reset your password.
+                </p>
+
+                <div class="input-group">
+                    <label for="resetEmail">Email Address</label>
+                    <input type="email" id="resetEmail" placeholder="Enter your email">
+                    <div class="error-message" id="resetEmailError">Please enter a valid email address</div>
+                </div>
+
+                <button class="auth-btn" id="resetBtn" onclick="handlePasswordReset()">
+                    <span id="resetBtnText">Send Reset Link</span>
+                </button>
+
+                <div class="auth-footer" style="margin-top: 25px;">
+                    Remember your password? <a href="#" onclick="switchToLogin()">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="index.js"></script>
+</body>
+
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+
+    <!-- Font Awesome (for star icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <section class="products" id="products">
+
+        <h1 class="heading">Our <span>Products</span></h1>
+        <div class="product-container">
+            <div class="box">
+                <img
+                    src="https://media.istockphoto.com/id/1438426028/photo/usda-choice-beef-rib-eye-steaks-for-sale-at-a-supermarket.jpg?s=612x612&w=0&k=20&c=FCcdQ-BYaOZbVJo623TCQpLY-uoI4DQgAG6fD6Vkngc=">
+                <h2>Meat</h2>
+                <div class="price">Rs.500/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+
+            <div class="box">
+                <img
+                    src="https://static.vecteezy.com/system/resources/previews/046/507/133/non_2x/raw-fish-mix-for-cooking-photo.jpg">
+                <h2>Fish</h2>
+                <div class="price">Rs.340/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+
+            <div class="box">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWa9s6hWRoZLyB9HIXgSWxxPoffemrAWqR5w&s">
+                <h2>Chicken</h2>
+                <div class="price">Rs.250/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+
+            <div class="box">
+                <img src="https://www.chennaimeats.com/images/buy-fresh-white-prawn-large-deveined-online.jpg">
+                <h2>Prawns</h2>
+                <div class="price">$3.99 - $5.49</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img src="https://globalseafoods.com/cdn/shop/articles/freshcrab_2048x.jpg?v=1705654386">
+                <h2>Crab</h2>
+                <div class="price">Rs.450/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="js/script.js"></script>
+
+
+</body>
+
+</html>

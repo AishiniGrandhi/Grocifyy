@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Grocifyy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="topnav">
+        <div class="logo">Grocifyy</div>
+
+        <ol class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="product.html" class="active">Store</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ol>
+
+        <div class="icons">
+            <!-- Search -->
+            <div class="icon-circle" onclick="toggleSearch()">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <!-- Cart -->
+            <div class="icon-circle" class="cart-container">
+                <a href="cart.html"><i class="fas fa-shopping-bag cart-icon"></i></a>
+                <span class="cart-count">3</span>
+            </div>
+
+            <!-- Login -->
+            <div class="icon-circle" onclick="openModal('login')">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+
+        <!-- Search Input -->
+        <div id="searchBox" class="search-box">
+            <input type="text" placeholder="Search for items...">
+        </div>
+    </div>
+
+    <!-- 
+    <section class="home" id="home">
+        <div class="content">
+            <h3>Fresh And <span>Organic</span> Products For You</h3>
+            <p>Discover the taste of health and purity with our handpicked fresh and organic products.</p>
+            <a href="product.html" class="btn">Shop Now</a>
+        </div>
+    </section> -->
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="auth-modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Welcome Back!</h2>
+                <span class="close" onclick="closeModal()">×</span>
+            </div>
+            <div class="modal-content">
+                <div class="success-message" id="successMessage"></div>
+
+                <div class="input-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email">
+                    <div class="error-message" id="emailError">Please enter a valid email address</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password">
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword('loginPassword', this)"></i>
+                    <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
+                </div>
+
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <div class="forgot-password">
+                        <a href="#" onclick="showForgotPassword()">Forgot password?</a>
+                    </div>
+                </div>
+
+                <button class="auth-btn" id="loginBtn" onclick="handleLogin()">
+                    <span id="loginBtnText">Login</span>
+                </button>
+
+                <div class="social-login">
+                    <p>Or login with</p>
+                    <div class="social-icons">
+                        <div class="social-icon facebook" onclick="socialLogin('facebook')">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+                        <div class="social-icon google" onclick="socialLogin('google')">
+                            <i class="fab fa-google"></i>
+                        </div>
+                        <div class="social-icon apple" onclick="socialLogin('apple')">
+                            <i class="fab fa-apple"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="auth-footer">
+                    Don't have an account? <a href="#" onclick="switchToSignup()">Sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="auth-modal">
+            <div class="modal-header">
+                <h2>Create Your Account</h2>
+                <span class="close" onclick="closeModal()">×</span>
+            </div>
+            <div class="modal-content">
+                <div class="success-message" id="signupSuccessMessage"></div>
+
+                <div class="input-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" placeholder="Enter your full name">
+                    <div class="error-message" id="nameError">Please enter your name</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email">
+                    <div class="error-message" id="signupEmailError">Please enter a valid email address</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password">
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword('signupPassword', this)"></i>
+                    <div class="error-message" id="signupPasswordError">Password must be at least 6 characters</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm your password">
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword('confirmPassword', this)"></i>
+                    <div class="error-message" id="confirmPasswordError">Passwords don't match</div>
+                </div>
+
+                <div class="input-group">
+                    <input type="checkbox" id="termsAgreement">
+                    <label for="termsAgreement">I agree to the <a href="#" style="color: #76c900;">Terms of Service</a>
+                        and <a href="#" style="color: #76c900;">Privacy Policy</a></label>
+                    <div class="error-message" id="termsError">You must agree to the terms</div>
+                </div>
+
+                <button class="auth-btn" id="signupBtn" onclick="handleSignup()">
+                    <span id="signupBtnText">Create Account</span>
+                </button>
+
+                <div class="auth-footer">
+                    Already have an account? <a href="#" onclick="switchToLogin()">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="auth-modal" style="width: 380px;">
+            <div class="modal-header">
+                <h2>Reset Password</h2>
+                <span class="close" onclick="closeModal()">×</span>
+            </div>
+            <div class="modal-content">
+                <p style="margin-bottom: 20px; color: #666; font-size: 14px;">
+                    Enter your email address and we'll send you a link to reset your password.
+                </p>
+
+                <div class="input-group">
+                    <label for="resetEmail">Email Address</label>
+                    <input type="email" id="resetEmail" placeholder="Enter your email">
+                    <div class="error-message" id="resetEmailError">Please enter a valid email address</div>
+                </div>
+
+                <button class="auth-btn" id="resetBtn" onclick="handlePasswordReset()">
+                    <span id="resetBtnText">Send Reset Link</span>
+                </button>
+
+                <div class="auth-footer" style="margin-top: 25px;">
+                    Remember your password? <a href="#" onclick="switchToLogin()">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="index.js"></script>
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+
+    <!-- Font Awesome (for star icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- our feature section-->
+    <section class="features" id="features">
+        <h1 class="heading"> Our <span>Features</span></h1>
+
+        <div class="box-container">
+            <div class="box">
+                <img src="https://img.freepik.com/free-vector/free-shipping-concept-illustration_114360-2978.jpg?semt=ais_country_boost&w=740"
+                    alt="Image 1">
+                <h3>Free Shipping</h3>
+                <p>Free Shipping above Rs 500/-</p>
+            </div>
+
+            <div class="box">
+                <img src="https://static.vecteezy.com/system/resources/previews/029/899/733/non_2x/secure-payment-credit-card-icon-with-shield-secure-transaction-stock-illustration-vector.jpg"
+                    alt="Image 2">
+                <h3>Secure Payment</h3>
+                <p>100% Secure Payment</p>
+            </div>
+
+            <div class="box">
+                <img src="https://betinasia.zendesk.com/hc/article_attachments/22178895521170" alt="Image 3">
+                <h3>24/7 Support</h3>
+                <p>We provide you a quick and full time support</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- our feature section-->
+
+    <!-- Our Categories Section-->
+    <section class="categories" id="categories">
+        <h1 class="heading"> Product <span>Categories</span></h1>
+        <div class="box-container">
+            <div class="box">
+                <img
+                    src="https://img.freepik.com/premium-vector/fresh-vegetable-logo-design-illustration_1323048-66756.jpg?w=360">
+                <h3>Vegetables</h3>
+                <p>Upto 45% Off</p>
+                <a href="Vegetable.html" class="btn">Shop Now</a>
+            </div>
+
+            <div class="box">
+                <img
+                    src="https://img.freepik.com/free-photo/colorful-fruits-tasty-fresh-ripe-juicy-white-desk_179666-169.jpg?semt=ais_country_boost&w=740">
+                <h3>Fresh Fruits</h3>
+                <p>Upto 45% Off</p>
+                <a href="Fruits.html" class="btn">Shop Now</a>
+            </div>
+
+            <div class="box">
+                <img
+                    src="https://media.istockphoto.com/id/544807136/photo/various-fresh-dairy-products.jpg?s=612x612&w=0&k=20&c=U5T70bi24itoTDive1CVonJbJ97ChyL2Pz1I2kOoSRo=">
+                <h3>Dairy Products</h3>
+                <p>Upto 45% Off</p>
+                <a href="dairy.html" class="btn">Shop Now</a>
+            </div>
+
+            <div class="box">
+                <img
+                    src="https://media.istockphoto.com/id/469354734/photo/fresh-and-raw-meat-sirloin-medallions-steaks.jpg?s=612x612&w=0&k=20&c=OH-FtjIgFS2psxomUDTZ450Zc35VvyZCQP2w64cbl_4=">
+                <h3>Fresh Meat</h3>
+                <p>Upto 45% Off</p>
+                <a href="meat.html" class="btn">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Our Categories Section-->
+
+
+    <section class="products" id="products">
+
+        <h1 class="heading">Our <span>Products</span></h1>
+        <div class="product-container">
+            <!-- Product 1 -->
+            <div class="box">
+                <img
+                    src="https://images.stockcake.com/public/c/4/4/c449e437-9f87-4658-9b55-c16817b8fd82_large/fresh-orange-display-stockcake.jpg">
+                <h2>Fresh Orange</h2>
+                <div class="price">Rs.90/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="box">
+                <img src="https://gardenerspath.com/wp-content/uploads/2024/05/How-to-Grow-Apples-Feature.jpg"
+                    alt="Fresh Apple">
+                <h2>Fresh Apple</h2>
+                <div class="price">Rs.180/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="box">
+                <img
+                    src="https://www.shutterstock.com/image-photo/pile-bananas-multiple-bunches-inside-600nw-2518259983.jpg">
+                <h2>Fresh Banana</h2>
+                <div class="price">Rs.45/dozen</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <!-- Product 4 -->
+            <div class="box">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBGpWpyQM8qppq4qF-t2fMS_v6SdqlOCa0Ug&s"
+                    alt="Fresh Grapes">
+                <h2>Fresh Grapes</h2>
+                <div class="price">Rs.120/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="box">
+                <img src="https://media.istockphoto.com/id/185275579/photo/bundles-of-organic-carrots-with-the-stems-still-attached.jpg?s=612x612&w=0&k=20&c=OIdIDUtDF9jxpCFnZlb7ld5tOj8pDMol1XIcfsHFlEk="
+                    alt="Fresh Carrot">
+                <h2>Fresh Carrot</h2>
+                <div class="price">Rs.50/500g</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="box">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFE4hE7qttJQNvx3FaE08M7oc7Lee7wSqmZg&s"
+                    alt="Fresh Broccoli">
+                <h2>Fresh Broccoli</h2>
+                <div class="price">Rs.140/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box" data-category="dairy">
+                <img src="https://m.media-amazon.com/images/I/51ehOqABmoL.jpg">
+                <h2>Curd</h2>
+                <div class="price">Rs.20/litre</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img
+                    src="https://media.istockphoto.com/id/1438426028/photo/usda-choice-beef-rib-eye-steaks-for-sale-at-a-supermarket.jpg?s=612x612&w=0&k=20&c=FCcdQ-BYaOZbVJo623TCQpLY-uoI4DQgAG6fD6Vkngc=">
+                <h2>Meat</h2>
+                <div class="price">Rs.500/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img src="https://burst.shopifycdn.com/photos/fresh-tomatoes-with-drops-of-water.jpg?exif=0&iptc=0">
+                <h2>Tomatoes</h2>
+                <div class="price">Rs.200/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+
+            <div class="box">
+                <img src="https://m.media-amazon.com/images/I/417b0S+y-vL.AC_UF894,1000_QL80.jpg">
+                <h2>Papaya</h2>
+                <div class="price">Rs.45/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+
+            <div class="box">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_mfsEvwP-jIaaPWX-gGVsX24LzpmTVEhK1w&s">
+                <h2>Milk</h2>
+                <div class="price">Rs.95/litre</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+
+            <div class="box">
+                <img
+                    src="https://media.istockphoto.com/id/641924940/photo/mangoes-composition-background.jpg?s=612x612&w=0&k=20&c=N60vzAI16zJxKZC2Gm7O_xrLUduBIsKEhJg-73_1jSU=">
+                <h2>Mangoes</h2>
+                <div class="price">Rs.320/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+
+            <div class="box">
+                <img src="https://greenacrefarmersmarket.com/cdn/shop/products/watermelon.jpg?v=1585924874">
+                <h2>Water Melons</h2>
+                <div class="price">Rs.90/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img src="https://5.imimg.com/data5/SELLER/Default/2023/3/MJ/OM/LB/134136915/guavasl-1000x.jpg">
+                <h2>Guava</h2>
+                <div class="price">Rs.45/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxznOs_NVTe7y6T5QUt7JwHMDqsCDQWwMBwQ&s">
+                <h2>Onion</h2>
+                <div class="price">Rs.100/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img src="https://i.ndtvimg.com/i/2018-02/garlic_620x350_71517566476.jpg">
+                <h2>Garlic</h2>
+                <div class="price">Rs.120.kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img
+                    src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3BpbmFjaHxlbnwwfHwwfHx8MA%3D%3D">
+                <h2>Spinach</h2>
+                <div class="price">Rs.80/2 bunches</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img src="https://5.imimg.com/data5/BV/NC/MY-51202890/fresh-brinjal.jpg">
+                <h2>Brinjal</h2>
+                <div class="price">Rs.130/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKlk8Kk3inimeMOnZTxMQwiu9f74gwyIVeEg&s">
+                <h2>Sweet Corn</h2>
+                <div class="price">Rs.46/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img
+                    src="https://c8.alamy.com/comp/EHB8A6/food-still-life-of-fresh-picked-garden-peas-and-pea-in-pods-on-a-rustic-EHB8A6.jpg">
+                <h2>Peas</h2>
+                <div class="price">Rs.90/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+
+            <div class="box">
+                <img
+                    src="https://static.vecteezy.com/system/resources/previews/046/507/133/non_2x/raw-fish-mix-for-cooking-photo.jpg">
+                <h2>Fish</h2>
+                <div class="price">Rs.340/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWa9s6hWRoZLyB9HIXgSWxxPoffemrAWqR5w&s">
+                <h2>Chicken</h2>
+                <div class="price">Rs.250/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img src="https://www.chennaimeats.com/images/buy-fresh-white-prawn-large-deveined-online.jpg">
+                <h2>Prawns</h2>
+                <div class="price">Rs.560/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img src="https://globalseafoods.com/cdn/shop/articles/freshcrab_2048x.jpg?v=1705654386">
+                <h2>Crab</h2>
+                <div class="price">Rs.450/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img src="https://www.shutterstock.com/image-photo/fresh-butter-slices-on-wooden-600nw-2568593227.jpg">
+                <h2>Butter</h2>
+                <div class="price">35/litre</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img src="https://ronaksatvikfoods.com/wp-content/uploads/2024/09/Copy-of-A2-Milk-1.png">
+                <h2>Panner</h2>
+                <div class="price">200/500g</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_j3RHyLOL0swQXOvJc7mMD4-Knr2oRwf6HA&s">
+                <h2>Whipped Cream</h2>
+                <div class="price">Rs.234/litre</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="box">
+                <img src="https://i.pinimg.com/736x/5b/1f/97/5b1f97168bd3a9085fc2a53bc6e45ca3.jpg">
+                <h2>Cheese</h2>
+                <div class="price">Rs.340/kg</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Products Section-->
+
+    <!-- Review Section Start -->
+    <section class="review" id="review">
+        <h1 class="heading">Customer's <span>Review</span></h1>
+
+        <div class="swiper review-slider">
+            <div class="swiper-wrapper">
+
+                <!-- Review 1 -->
+                <div class="swiper-slide box">
+                    <img src="https://i.pravatar.cc/100?img=1" alt="User 1">
+                    <p>Great experience! Products were fresh and delivered quickly.</p>
+                    <h3>John Doe</h3>
+                    <div class="stars">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-alt"></i>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="swiper-slide box">
+                    <img src="https://i.pravatar.cc/100?img=2" alt="User 2">
+                    <p>Clean packaging and prompt service. Loved it!</p>
+                    <h3>Aishwarya</h3>
+                    <div class="stars">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-alt"></i>
+
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="swiper-slide box">
+                    <img src="https://i.pravatar.cc/100?img=3" alt="User 3">
+                    <p>Awesome app, groceries delivered super fast and fresh.</p>
+                    <h3>Aishini</h3>
+                    <div class="stars">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="swiper-slide box">
+                    <img src="https://i.pravatar.cc/100?img=4" alt="User 4">
+                    <p>Impressed with the quality and timely delivery!</p>
+                    <h3>Neha</h3>
+                    <div class="stars">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-alt"></i>
+                    </div>
+                </div>
+
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+    <!-- Review Section End -->
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
+
+<!-- footer  -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocifyy Footer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .footer {
+            background-color: #3c4f52;
+            color: white;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #9cdb2a, #ffa64d);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            color: #9cdb2a;
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+            font-weight: 700;
+        }
+
+        .logo p {
+            color: #ffa64d;
+            font-style: italic;
+        }
+
+        .subscribe-form {
+            display: flex;
+            min-width: 400px;
+            position: relative;
+        }
+
+        .subscribe-form input {
+            padding: 12px 15px;
+            border: none;
+            border-radius: 25px;
+            width: 100%;
+            outline: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .subscribe-form button {
+            position: absolute;
+            right: 0;
+            padding: 10px 20px;
+            background: linear-gradient(to right, #9cdb2a, #8bc422);
+            color: white;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            font-weight: bold;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .subscribe-form button:hover {
+            background: linear-gradient(to right, #8bc422, #7db01b);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ffa64d;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #ffa64d;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-icon:hover {
+            background-color: #ffa64d;
+            color: #3c4f52;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 166, 77, 0.3);
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+            margin: 20px 0;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 30px;
+            height: 2px;
+            background-color: #9cdb2a;
+        }
+
+        .footer-column p,
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column p i,
+        .footer-column a i {
+            margin-right: 8px;
+            color: #9cdb2a;
+        }
+
+        .footer-column a:hover {
+            color: #9cdb2a;
+            transform: translateX(5px);
+        }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 20px;
+            border: 1px solid #9cdb2a;
+            color: #9cdb2a;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            background-color: rgba(156, 219, 42, 0.1);
+        }
+
+        .read-more:hover {
+            background-color: #9cdb2a;
+            color: #3c4f52;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(156, 219, 42, 0.3);
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .payment-icon {
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            padding: 5px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .payment-icon:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .bottom-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .copyright {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .copyright span {
+            color: #9cdb2a;
+            font-weight: bold;
+        }
+
+        .credits a {
+            color: #9cdb2a;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .credits a:hover {
+            color: #ffa64d;
+            text-decoration: underline;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(to right, #9cdb2a, #8bc422);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer-app-download {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .app-button {
+            padding: 8px 15px;
+            background-color: #2d3c3e;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .app-button:hover {
+            background-color: #232f30;
+            transform: translateY(-2px);
+        }
+
+        .app-button i {
+            font-size: 1.5rem;
+            margin-right: 8px;
+            color: white;
+        }
+
+        .app-button .app-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-button .small-text {
+            font-size: 0.7rem;
+            color: #9cdb2a;
+        }
+
+        .app-button .big-text {
+            font-size: 0.9rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .newsletter-success {
+            display: none;
+            padding: 15px;
+            background-color: rgba(156, 219, 42, 0.1);
+            border-left: 3px solid #9cdb2a;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
+        @media (max-width: 992px) {
+            .footer-links {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .footer-column:first-child {
+                grid-column: span 3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .subscribe-form {
+                min-width: 100%;
+            }
+
+            .footer-links {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-column:first-child {
+                grid-column: span 2;
+            }
+
+            .bottom-footer {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-links {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-column:first-child {
+                grid-column: span 1;
+            }
+
+            .social-icons {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .payment-methods {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="top-section">
+                <div class="logo">
+                    <h3>Grocifyy</h3>
+                    <h6>Fresh products, delivered daily</h6>
+                </div>
+
+                <div class="subscribe-form">
+                    <input type="email" placeholder="Enter your email for weekly offers">
+                    <button>Subscribe</button>
+                </div>
+
+                <div class="social-icons">
+                    <div class="social-icon">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <div class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <div class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="social-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>Why People Love Grocifyy</h3>
+                    <p>At Grocifyy, we're committed to delivering fresh, high-quality products sourced directly from
+                        local
+                        farmers and suppliers. Our dedication to quality, affordability, and exceptional customer
+                        service has made us the preferred grocery destination for thousands of families.</p>
+                    <a href="#" class="read-more">Read More</a>
+
+                    <div class="footer-app-download">
+                        <div class="app-button">
+                            <i class="fab fa-apple"></i>
+                            <div class="app-text">
+                                <span class="small-text">Download on the</span>
+                                <span class="big-text">App Store</span>
+                            </div>
+                        </div>
+                        <div class="app-button">
+                            <i class="fab fa-google-play"></i>
+                            <div class="app-text">
+                                <span class="small-text">GET IT ON</span>
+                                <span class="big-text">Google Play</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Shop Info</h3>
+                    <a href="#"><i class="fas fa-info-circle"></i> About Us</a>
+                    <a href="#"><i class="fas fa-phone-alt"></i> Contact Us</a>
+                    <a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+                    <a href="#"><i class="fas fa-file-contract"></i> Terms & Conditions</a>
+                    <a href="#"><i class="fas fa-undo-alt"></i> Return Policy</a>
+                    <a href="#"><i class="fas fa-question-circle"></i> FAQs & Help</a>
+                </div>
+
+                <div class="footer-column">
+                    <h3>My Account</h3>
+                    <a href="#"><i class="fas fa-user"></i> My Account</a>
+                    <a href="#"><i class="fas fa-store"></i> Shop Details</a>
+                    <a href="#"><i class="fas fa-shopping-cart"></i> Shopping Cart</a>
+                    <a href="#"><i class="fas fa-heart"></i> Wishlist</a>
+                    <a href="#"><i class="fas fa-history"></i> Order History</a>
+                    <a href="#"><i class="fas fa-globe-americas"></i> International Orders</a>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123, T-Nagar, Chennai</p>
+                    <p><i class="fas fa-envelope"></i> support@gmart.com</p>
+                    <p><i class="fas fa-phone-alt"></i> +91 92545 92545</p>
+                    <p><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 10:00 PM</p>
+                    <p><i class="fas fa-credit-card"></i> Payment Accepted</p>
+                    <div class="payment-methods">
+                        <div class="payment-icon" style="background-color: #232f30;">VISA</div>
+                        <div class="payment-icon" style="background-color: #232f30;">MC</div>
+                        <div class="payment-icon" style="background-color: #232f30;">AMEX</div>
+                        <div class="payment-icon" style="background-color: #232f30;">PayPal</div>
+                        <div class="payment-icon" style="background-color: #232f30;">UPI</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="newsletter-success">
+                Thank you for subscribing to our newsletter! You'll now receive weekly offers and updates.
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="bottom-footer">
+                <div class="copyright">
+                    <i class="far fa-copyright"></i>
+                    <span>Grocifyy</span> 2025, All rights reserved.
+                </div>
+
+
+            </div>
+        </div>
+    </footer>
+
+    <div class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <script>
+        // Load Google Fonts
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap';
+        document.head.appendChild(link);
+
+        // Back to top button functionality
+        const backToTopButton = document.querySelector('.back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // For the subscribe form
+        const subscribeForm = document.querySelector('.subscribe-form');
+        const emailInput = subscribeForm.querySelector('input');
+        const subscribeButton = subscribeForm.querySelector('button');
+        const newsletterSuccess = document.querySelector('.newsletter-success');
+
+        subscribeButton.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            if (emailInput.value.trim() === '') {
+                showToast('Please enter your email address');
+                return;
+            }
+
+            if (!isValidEmail(emailInput.value)) {
+                showToast('Please enter a valid email address');
+                return;
+            }
+
+            // Show success message
+            newsletterSuccess.style.display = 'block';
+            emailInput.value = '';
+
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                newsletterSuccess.style.display = 'none';
+            }, 5000);
+        });
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function showToast(message) {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.style.position = 'fixed';
+            toast.style.bottom = '20px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = '#3c4f52';
+            toast.style.color = 'white';
+            toast.style.padding = '10px 20px';
+            toast.style.borderRadius = '4px';
+            toast.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+            toast.style.zIndex = '1000';
+            toast.innerText = message;
+
+            document.body.appendChild(toast);
+
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 3000);
+        }
+
+        // Add animation to social icons
+        const socialIcons = document.querySelectorAll('.social-icon');
+
+        socialIcons.forEach(icon => {
+            icon.addEventListener('mouseenter', () => {
+                icon.style.transform = 'translateY(-3px)';
+            });
+
+            icon.addEventListener('mouseleave', () => {
+                icon.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+
+</html>
